@@ -1,0 +1,299 @@
+<html>
+<head>
+<style>
+/*************************************
+GENERAL
+*************************************/
+body {
+    margin: 15;
+    padding: 0;
+    font: 12px/1.4em "Lucida Grande", Verdana, sans-serif;
+    color: #333;
+    overflow-y: scroll;
+    text-rendering: optimizeLegibility;
+    background-color: #F2F2F2;
+}
+
+h2 {
+    font-size: 1.3em;
+    line-height: 1.5em;
+    font-weight: bold;
+    margin: 20px 0 0 0;
+    padding: 0;
+    border-bottom: 3px solid #eee;
+
+    /* icon setup */
+    padding: 0.2em 1em 0.2em 30px;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+}
+
+
+/*************************************
+SECTIONS
+*************************************/
+div#content {
+    margin: 30px auto;
+    padding: 0 30px 15px 30px;
+    background-color: #fff;
+    width: 940px;
+
+    /* box-shadow */
+    -moz-box-shadow: 0 5px 10px #aaa;
+    -webkit-box-shadow: 0 5px 10px #aaa;
+    box-shadow: 0 5px 10px #aaa;
+
+    /* bottom corners */
+    -webkit-border-bottom-right-radius: 7px;
+    -webkit-border-bottom-left-radius: 7px;
+    -moz-border-radius-bottomright: 7px;
+    -moz-border-radius-bottomleft: 7px;
+    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+
+/*div#content div.section {}*/
+
+div#content div.section ul {
+    margin: 0;
+    padding: 1em 0 0 2em;
+    overflow: hidden;
+}
+
+div#content div.section ul li {
+    list-style-type: square;
+    white-space: nowrap;
+    line-height: 1.5em;
+}
+
+
+
+
+/*************************************
+CONTAINERS
+*************************************/
+.container {
+    zoom: 1;
+}
+
+.container:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
+/*************************************
+GRIDS
+*************************************/
+.grid { float: left; margin-right: 20px; }
+.gridlast { margin-right: 0; }
+.grid5 { width: 300px; }
+.grid15 { width: 940px; }
+
+</style>
+</head>
+<div style="left: 32px; width: 975px; height: 753px;">
+<div style="padding-left: 37.5px; padding-right: 37.5px;">
+
+<div>
+
+<h1>Heart Disease Prediction with AWS SageMaker</h1>
+
+<p>
+Machine learning can potentially play a significant role in helping doctors and scientists predict heart disease.  
+A person’s chance of having a heart disease includes many factors such as diabetes, high blood pressure, high cholesterol, abnormal heart rate, and age. 
+ In this sample, you will use AWS SageMaker to train a linear learner algorithm that can potentially predict the presence of heart disease
+
+<br>
+Note: This is only a sample application and should not be considered as medical advice.
+</p>
+
+<hr>
+
+</div>
+
+<div>
+
+<h3>Architecture</h3>
+
+<p>
+The architecture for this workshop is the following:
+
+
+<img alt="" src="src/main/resources/images/architecture.png" style="width:600px;height:450px;">
+
+</p>
+
+<hr>
+
+</div>
+
+<div>
+
+<h3>Description</h3>
+
+<p>
+This project uses <a href="https://archive.ics.uci.edu/ml/datasets/Heart+Disease"> Cleveland Heart Disease </a> dataset taken from the UCI repository.  
+The dataset consists of 303 records that measure an individual features (age, heart rate, sex, blood pressure, etc.).  
+As depicted above, you will first use SageMaker linear learner algorithm to train and deploy a model.  Once the model is deployed, you can use AWS API Gateway to get real time prediction for a set of data.
+If the model predicts the presence of heart disease, an SNS notification is sent to the user e-mail address.
+
+<hr>
+
+</div>
+
+<div>
+
+<h3>Quick Start</h3>
+
+<p>
+The quick start guide is intended to deploy the sample application in your own AWS account using a cloud formation template.
+
+</p>
+</ul>
+
+<hr>
+
+</div>
+
+<div>
+
+<h3>Pre-requisites</h3>
+
+<ol>
+<li> Sign-in to AWS or <a href="https://us-west-2.console.aws.amazon.com/"> Create an Account </a></li>
+<li> Create an <a href="https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html"> AWS Bucket </a> </li>
+a.	Note: please make sure your bucket name starts with "sagemaker"".  This allows SageMaker to access your bucket.<br>
+b.	Make a note of the region.  Make sure all services used are in the same region as your bucket.
+<li> Upload <b> "heart.csv" </b> file located in project /src/test/resources directory to your AWS Bucket.  </li>
+<li> Upload packaged code <b>"heart_function-1.0.0" </b> provided in root directory to your AWS Bucket. </li>
+
+</ol>
+
+
+<hr>
+
+</div>
+
+<div>
+
+<h3>Training SageMaker Model</h3>
+
+<p>In this section, we will use AWS SageMaker to import the sample jupyter notebook and train a model that can predict heart disease.  
+Once the model is trained, it will be hosted directly on SageMaker. </p>
+
+<ol>
+	<li>Using AWS Console, select <b>Amazon SageMaker </b> from the list of AWS Services. </li>
+	<li>In SageMaker console, select <b> Notebook instances </b> from the left navigation panel </li>
+	<br>
+	<img alt="" src="src/main/resources/images/sageMakerConsole.png" style="width:700px;height:400px;">
+	<br><br>
+	
+	<li> Select <b> create notebook </b> instance </li>
+	<li> Enter a <b>name</b> for your notebook.  Keep all other fields as <b>default.</b> </li>
+	
+	<br>
+	
+	<img alt="" src="src/main/resources/images/createingNotebook.png" style="width:700px;height:400px;">
+	
+	<br><br>
+	<li> Click on <b>Create notebook instance </b> </li>
+	<li> Once notebook instance is <b>In Service </b>, click on <b>Open Jupyter. </b> </li>
+	<li> Click <b>Upload </b> </li>
+	<li> Choose <b> heart-disease-prediction.ipynb </b></li>
+	<li> Click on <b> Upload </b> again to confirm </li>
+	<br>
+	<img alt="" src="src/main/resources/images/uploadingNotebook.png" style="width:600px;height:200px;">
+	<br><br>
+	
+	<li> Click on <b> heart-disease-prediction.ipynb </b> to open the file
+	<li> Scroll down to the first section that contains code and enter the <b>bucket name </b> that you had created earlier.
+	<br><br>
+	<img alt="" src="src/main/resources/images/bucketName.png" style="width:600px;height:250px;">
+	<br>
+	<li>Once the bucket name is replaced, Click <b>Run </b>
+	<br><br>
+	<img alt="" src="src/main/resources/images/runningSageMaker.png" style="width:600px;height:250px;">
+	<br><br>
+	<li> When a cell blocks finishes execution, a number is displayed next to the cell.  Continue clicking on <b>Run </b> on each cell block.  
+			<br>Note: Training and deploying the model take the longest time.
+	<li> After you have hosted your model, <b> copy the endpoint name </b>.  You will use this endpoint name when launching cloud formation.
+	<br><br>
+	<img alt="" src="src/main/resources/images/sageMakerEndpoint.png" style="width:600px;height:100px;">
+	<br><br>
+	<li>You can continue to execute the remaining cell blocks to get a prediction on SageMaker notebook.  
+		<br> <b>Warning:</b> Do not execute the (Optional) Delete the endpoint
+	</li>	
+</ol>
+</div>
+
+<div>
+	<h3>Launch Cloud Formation Template</h3>
+	<p> In this section, you will launch a cloud formation template that performs the following:
+		<ul> 
+			<li>Creates API Gateway
+			<li> Creates a lambda function that calls SageMaker endpoint
+			<li> Creates an SNS notification that sends e-mail
+			</ul>
+	
+		<ol>
+			<li> Using AWS Console, select <b>CloudFormation </b> from the list of AWS Services.
+			<li> Choose  <b>Create Stack. </b>  
+			<li> Select <b>Template is ready </b> and <b>Upload a template file </b>
+			<li> Choose <b> cloud_formation_template.yaml </b> file located in project root directory.
+			<li> On the next page, specify stack details<br>
+				a. Choose a <b>stack name </b> <br>
+				b. Specify your <b>bucket name </b>(this is the bucket you created earlier)<br>
+				c. Specify <b>Email address. </b>  This email address is used to send you notification if heart disease is predicted.<br>
+				d. Specify the <b>uploaded lambda code </b> (this is the code you uploaded) <br>
+				e. Specify the<b> SageMaker endpoint </b> (this is the endpoint you copied earlier) <br>
+				
+			<br>
+			<img alt="" src="src/main/resources/images/cloudformationStack.png" style="width:600px;height:250px;">
+			<br><br>
+			<li> Click <b>Next </b>
+			<li> On subsequent pages, leave all other fields to their <b>default </b> values and click <b>Next.</b> 
+			<li> On the final page, acknowledge all <b>Transform might require access capabilities </b>
+			<li> Choose <b>Create Stack </b>
+			<li> Once the Stack is successfully created, click on <b> Output tab </b>
+			<li> Copy the <b>prodDataEndpoint </b> value.  This is the API Gateway endpoint used for real time predictions.
+			<br> <br>
+			<img alt="" src="src/main/resources/images/apiGatewayEndpoint.png" style="width:600px;height:250px;">
+				
+		</ol>
+		
+	</p>
+
+
+</div>
+<div>
+	<h3>Predicting Heart Disease in Real Time</h3>
+	<p> 
+		The cloud formation template has created an endpoint that can be invoked in real time to predict heart disease.  We will use the sample data below to get a prediction of heart disease.
+
+	Example data:
+	You can use API Gateway console, postman, or simple curl command to invoke your API in real time. <br> 
+	Below is an example curl command to get heart disease prediction in real time 
+	
+	<br><br>
+	curl -d &#39{"age": "23","sex": 1,"cp": 3,"trestbps": 145,"chol": 233,"fbs": 1,"restecg": 0,"thalach":150,"exang": 0,"oldpeak": 2.3,"slope": 0,"ca": 0,"thal": 1}&#39 -X POST <b>{ENTER_API_GATEWAY_ENDPOINT}</b>;
+	
+	<br> <br>
+	The above call should return a real time prediction: 
+	<br><br>
+	<img alt="" src="src/main/resources/images/curlResult.png" style="width:550px;height:30px;">
+	<br><br>
+	
+	Note: When prediction label is 1, a notification e-mail is also sent.  You may have to first confirm the subscription of your e-mail.
+	<br><br>
+	<img alt="" src="src/main/resources/images/confirmSubscription.png" style="width:600px;height:250px;">
+	<br><br>
+	<img alt="" src="src/main/resources/images/sampleEmail.png" style="width:500px;height:100px;">
+	</p>
+</div>
+	
+	
+</html>
