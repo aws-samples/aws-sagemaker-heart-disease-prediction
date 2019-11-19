@@ -1,4 +1,4 @@
-## My Project
+## AWS SageMaker Heart Disease Prediction 
 
 TODO: Fill this README out!
 
