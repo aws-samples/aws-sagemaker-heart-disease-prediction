@@ -8,7 +8,7 @@ Note: This is only a sample application and should not be considered as medical 
 
 The architecture for this workshop is the following:
 
-(src/main/resources/images/architecture.png)
+[architecture](src/main/resources/images/architecture.png)
 
 
 Be sure to:
