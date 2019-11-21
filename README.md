@@ -28,6 +28,7 @@ Prerequisites:
    b.	Make a note of the region.  Make sure all services used are in the same region as your bucket.
 3.	Upload **‘heart.csv’** file located in project **/src/test/resources** directory to your AWS Bucket.  
 4.	Upload packaged code **‘heart_function-1.0.0’** provided in root directory to your AWS Bucket.
+5. Download **heart-disease-prediction.ipynb** file to your local computer
 
 ### Training SageMaker Model
 In this section, we will use AWS SageMaker to import the sample jupyter notebook and train a model that can predict heart disease.  Once the model is trained, it will be hosted directly on SageMaker. 
@@ -46,7 +47,7 @@ In this section, we will use AWS SageMaker to import the sample jupyter notebook
 6.	Once notebook instance is ‘**In Service’**, click on **Open Jupyter.**
 7.	Click **Upload**
 8.	Choose **heart-disease-prediction.ipynb**
-9.	Click on **Upload**again to confirm
+9.	Click on **Upload** again to confirm
 
 ![upload](heart-disease-predictor/src/main/resources/images/uploadingNotebook.png)
 
