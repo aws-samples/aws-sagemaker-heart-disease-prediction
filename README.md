@@ -35,7 +35,7 @@ In this section, we will use AWS SageMaker to import the sample jupyter notebook
 1.	Using AWS Console, select Amazon SageMaker from the list of AWS Services.
 2.	In SageMaker console, select Notebook instances from the left navigation panel
 
- ![sagemaker_cosole] (heart-disease-predictor/src/main/resources/images/sageMakerConsole.png)
+ ![sagemaker_cosole](heart-disease-predictor/src/main/resources/images/sageMakerConsole.png)
 
 
 
