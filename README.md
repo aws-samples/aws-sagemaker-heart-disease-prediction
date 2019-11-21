@@ -22,10 +22,10 @@ The quick start guide is intended to deploy the sample application in your own A
 Quick Start Setup
 
 Prerequisites:
-1.	Sign-in to AWS or Create an Account
-2.	Create an AWS Bucket
-a.	Note: please make sure your bucket name starts with ‘sagemaker’.  This allows SageMaker to access your bucket.
-b.	Make a note of the region.  Make sure all services used are in the same region as your bucket.
+1.	Sign-in to AWS or [Create an Account](https://us-west-2.console.aws.amazon.com)
+2.	[Create an AWS Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)
+   a.	Note: please make sure your bucket name starts with ‘sagemaker’.  This allows SageMaker to access your bucket.
+   b.	Make a note of the region.  Make sure all services used are in the same region as your bucket.
 3.	Upload **‘heart.csv’** file located in project **/src/test/resources** directory to your AWS Bucket.  
 4.	Upload packaged code **‘heart_function-1.0.0’** provided in root directory to your AWS Bucket.
 
