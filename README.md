@@ -8,7 +8,7 @@ Note: This is only a sample application and should not be considered as medical 
 
 The architecture for this workshop is the following:
 
-![alt text] https://github.com/aws-samples/aws-sagemaker-heart-disease-prediction/blob/master/heart-disease-predictor/src/main/resources/images/architecture.png
+(src/main/resources/images/architecture.png)
 
 
 Be sure to:
