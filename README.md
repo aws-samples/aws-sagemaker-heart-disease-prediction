@@ -60,7 +60,7 @@ In this section, we will use AWS SageMaker to import the sample jupyter notebook
 
 ![run](heart-disease-predictor/src/main/resources/images/runningSageMaker.png)
 
-13.	When a cell blocks finishes execution, a number is displayed next to the cell.  Continue clicking on **Run** on each cell block.  
+13.	When a cell blocks finishes execution, a number is displayed next to the cell.  **Continue clicking on Run** on each cell block that contains code.  
 Note: Training and deploying the model take the longest time.
 
 14.	After you have hosted your model, copy the **endpoint name.**  You will use this endpoint name when launching cloud formation.
