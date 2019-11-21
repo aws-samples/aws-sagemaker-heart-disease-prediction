@@ -117,7 +117,7 @@ Note: When prediction label is 1, a notification e-mail is also sent.  You may h
 
 ![confirm](heart-disease-predictor/src/main/resources/images/confirmSubscription.png)
 
-![sample_email] (heart-disease-predictor/src/main/resources/images/sampleEmail.png)
+![sample_email](heart-disease-predictor/src/main/resources/images/sampleEmail.png)
 
 
 
