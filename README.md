@@ -79,6 +79,24 @@ In this section, you will launch a cloud formation template that performs the fo
 1.	Using AWS Console, select ‘CloudFormation’ from the list of AWS Services.
 2.	Choose ‘Create Stack’.  
 3.	Select ‘Template is ready’ and ‘Upload a template file’
+4.	Choose ‘cloud_formation_template.yaml’ file located in project root directory.
+5.	On the next page, specify stack details
+   a.	Choose a stack name
+   b.	Specify your bucket name (this is the bucket you created earlier)
+   c.	Specify Email address.  This email address is used to send you notification if heart disease is predicted.
+   d.	Specify the uploaded lambda code (this is the code you uploaded)
+   e.	Specify the SageMaker endpoint (this is the endpoint you copied earlier)
+
+![stack](heart-disease-predictor/src/main/resources/images/cloudformationStack.png)
+
+6.	Click Next
+7.	On subsequent pages, leave all other fields to their default values and click Next. 
+8.	On the final page, acknowledge all ‘Transform might require access capabilities’
+9.	Choose Create Stack
+10.	Once the Stack is successfully created, click on Output tab
+11.	Copy the prodDataEndpoint value.  This is the API Gateway endpoint used for real time predictions.
+
+![apigatewayendpoint](heart-disease-predictor/src/main/resources/images/apiGatewayEndpoint.png)
 
 
 
