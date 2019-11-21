@@ -69,6 +69,20 @@ Note: Training and deploying the model take the longest time.
 15.	You can continue to execute the remaining cell blocks to get a prediction on SageMaker notebook.  
 Warning: Do not execute the ‘(Optional) Delete the endpoint’.
 
+### Launch cloud Formation
+
+In this section, you will launch a cloud formation template that performs the following:
+- Creates API Gateway
+- Creates a lambda function that calls SageMaker endpoint
+- Creates an SNS notification that sends e-mail
+
+1.	Using AWS Console, select ‘CloudFormation’ from the list of AWS Services.
+2.	Choose ‘Create Stack’.  
+3.	Select ‘Template is ready’ and ‘Upload a template file’
+
+
+
+
 
 Be sure to:
 
