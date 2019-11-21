@@ -4,6 +4,9 @@ Machine learning can potentially play a significant role in helping doctors and 
 
 Note: This is only a sample application and should not be considered as medical advice.
 
+## Architecture
+
+The architecture for this workshop is the following:
 
 
 Be sure to:
