@@ -37,8 +37,37 @@ In this section, we will use AWS SageMaker to import the sample jupyter notebook
 
  ![sagemaker_cosole](heart-disease-predictor/src/main/resources/images/sageMakerConsole.png)
 
+3.	Select create notebook instance
+4.	Enter a name for your notebook.  Keep all other fields as default. 
 
+![notebook](heart-disease-predictor/src/main/resources/images/createingNotebook.png)
 
+5.	Click on Create notebook instance
+6.	Once notebook instance is ‘In Service’, click on Open Jupyter.
+7.	Click Upload
+8.	Choose heart-disease-prediction.ipynb
+9.	Click on Upload again to confirm
+
+![upload](heart-disease-predictor/src/main/resources/images/uploadingNotebook.png)
+
+10.	Click on heart-disease-prediction.ipynb to open the file
+11.	Scroll down to the first section that contains code and enter the bucket name that you had created earlier.
+
+![bucketName](heart-disease-predictor/src/main/resources/images/bucketName.png)
+
+12.	Once the bucket name is replaced, Click Run
+
+![run](heart-disease-predictor/src/main/resources/images/runningSageMaker.png)
+
+13.	When a cell blocks finishes execution, a number is displayed next to the cell.  Continue clicking on Run on each cell block.  
+Note: Training and deploying the model take the longest time.
+
+14.	After you have hosted your model, copy the endpoint name.  You will use this endpoint name when launching cloud formation.
+
+![endpoint](heart-disease-predictor/src/main/resources/images/sageMakerEndpoint.png)
+
+15.	You can continue to execute the remaining cell blocks to get a prediction on SageMaker notebook.  
+Warning: Do not execute the ‘(Optional) Delete the endpoint’.
 
 
 Be sure to:
