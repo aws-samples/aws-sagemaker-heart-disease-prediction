@@ -7,13 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
+import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.sagemakerruntime.AmazonSageMakerRuntime;
 import com.amazonaws.services.sagemakerruntime.AmazonSageMakerRuntimeClientBuilder;
 import com.amazonaws.services.sagemakerruntime.model.InvokeEndpointRequest;
@@ -23,7 +22,7 @@ import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
 
-public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatewayResponse> {
+public class LambdaFunctionHandler implements RequestHandler<APIGatewayProxyRequestEvent, ApiGatewayResponse> {
 
 	private static String FEATURES = "features";
 	private static String INSTANCES = "instances";
@@ -41,29 +40,32 @@ public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatew
 	}
 
 	@Override
-	public ApiGatewayResponse handleRequest(HeartData event, Context context) {
+	public ApiGatewayResponse handleRequest(APIGatewayProxyRequestEvent  event, Context context) {
 		
 		
 		if (event != null) {
 
+			context.getLogger().log("incoming event data " + event.toString());
+			JSONObject jsonObject = getEventData(event, context);
+		
 			// build the list of features (e.g. [57,1,0,140,192,0,1,148,0,0.4,1,0,1] )
-			List<Object> featuresList = buildFeatures(event);
+			List<Object> featuresList = buildFeatures(jsonObject);
 
 			context.getLogger().log("features: " + featuresList.toString());
 
 			JSONObject request = buildRequest(featuresList);
 
-			context.getLogger().log("SageMaker request data : " + request.toJSONString());
+			context.getLogger().log("SageMaker request data : " + request.toString());
 			
 			//get inference response from SageMaker
 			JSONObject response = getInference(request, context);
 
 			if (response != null) {
-				context.getLogger().log("Inference response data : " + response.toJSONString());
-				JSONArray predictions = (JSONArray) response.get("predictions");
-				Iterator<JSONObject> iter = predictions.iterator();
+				context.getLogger().log("Inference response data : " + response.toString());
+				JSONArray predictions =  response.getJSONArray("predictions");
+				Iterator<Object> iter = predictions.iterator();
 				while (iter.hasNext()) {
-					JSONObject prediction = iter.next();
+					JSONObject prediction = (JSONObject)iter.next();
 					//get the prediciton label
 					prediction_label = ((Double) prediction.get("predicted_label")).doubleValue();
 					
@@ -116,7 +118,7 @@ public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatew
 		invokeEndpointRequest.setContentType("application/json");
 
 		try {
-			invokeEndpointRequest.setBody(ByteBuffer.wrap(request.toJSONString().getBytes("UTF-8")));
+			invokeEndpointRequest.setBody(ByteBuffer.wrap(request.toString().getBytes("UTF-8")));
 		} catch (java.io.UnsupportedEncodingException use) {
 
 			context.getLogger().log("Unsuported sageMaker endpoint exception " + use.getMessage());
@@ -127,15 +129,11 @@ public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatew
 		InvokeEndpointResult result = sageMakerRuntime.invokeEndpoint(invokeEndpointRequest);
 
 		String body = StandardCharsets.UTF_8.decode(result.getBody()).toString();
-		JSONParser parser = new JSONParser();
-		try {
-			JSONObject jsonResponse = (JSONObject) parser.parse(body);
-			return jsonResponse;
-		} catch (ParseException pe) {
-			context.getLogger().log("Parsing exception " + pe.getMessage());
-		}
-		context.getLogger().log("Unable to get inference from  SageMaker ");
-		return null;
+
+		JSONObject jsonResponse = new JSONObject(body);
+			
+		return jsonResponse;
+		
 
 	}
 	/**
@@ -143,17 +141,28 @@ public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatew
 	 * @param featuresList
 	 * @return
 	 */
-	private JSONObject buildRequest(List<Object> featuresList) {
+	private JSONObject  buildRequest(List<Object> featuresList) {
 		if (featuresList != null && !featuresList.isEmpty()) {
 			JSONObject data = new JSONObject();
 			JSONArray instances = new JSONArray();
 			JSONObject features = new JSONObject();
 			features.put(FEATURES, featuresList);
 			data.put(INSTANCES, instances);
-			instances.add(features);
+			instances.put(features);
+			
 			return data;
 		}
 		return null;
+	}
+	
+	private JSONObject getEventData(APIGatewayProxyRequestEvent event, Context context) {
+	
+			context.getLogger().log("Event body is " + event.getBody());
+		
+			JSONObject jsonObject = new JSONObject(event.getBody());
+
+			return jsonObject;
+		
 	}
 	
 	/**
@@ -161,22 +170,23 @@ public class LambdaFunctionHandler implements RequestHandler<HeartData, ApiGatew
 	 * @param event
 	 * @return
 	 */
-	private List<Object> buildFeatures(HeartData event) {
+	private List<Object> buildFeatures(JSONObject jsonObject) {
 		List<Object> features = new Vector<Object>();
-		if (event != null) {
-			features.add(event.getAge());
-			features.add(event.getSex());
-			features.add(event.getCp());
-			features.add(event.getTrestbps());
-			features.add(event.getChol());
-			features.add(event.getFbs());
-			features.add(event.getRestecg());
-			features.add(event.getThalach());
-			features.add(event.getExang());
-			features.add(event.getOldpeak());
-			features.add(event.getSlope());
-			features.add(event.getCa());
-			features.add(event.getThal());
+		if (jsonObject != null) {
+			
+			features.add(jsonObject.getString("age"));
+			features.add(jsonObject.getInt("sex"));
+			features.add(jsonObject.getInt("cp"));
+			features.add(jsonObject.getInt("trestbps"));
+			features.add(jsonObject.getInt("chol"));
+			features.add(jsonObject.getInt("fbs"));
+			features.add(jsonObject.getInt("restecg"));
+			features.add(jsonObject.getInt("thalach"));
+			features.add(jsonObject.get("exang"));
+			features.add(jsonObject.get("oldpeak"));
+			features.add(jsonObject.get("slope"));
+			features.add(jsonObject.get("ca"));
+			features.add(jsonObject.get("thal"));
 		}
 		return features;
 
