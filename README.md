@@ -26,7 +26,7 @@ Prerequisites:
 2.	[Create an AWS Bucket](https://docs.aws.amazon.com/AmazonS3/latest/gsg/CreatingABucket.html)
    a.	Note: please make sure your bucket name starts with ‘sagemaker’.  This allows SageMaker to access your bucket.
    b.	Make a note of the region.  Make sure all services used are in the same region as your bucket.
-3.	Upload **‘heart.csv’** file located in project **/src/test/resources** directory to your AWS Bucket.  
+3.	Upload **‘heart.csv’** file located in project **/src/main/resources** directory to your AWS Bucket.  
 4.	Upload packaged code **‘heart_function-1.0.0’** provided in root directory to your AWS Bucket.
 5. Download **heart-disease-prediction.ipynb** file to your local computer
 
