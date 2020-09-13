@@ -28,8 +28,8 @@ public class LambdaFunctionHandler implements RequestHandler<APIGatewayProxyRequ
 	private static String INSTANCES = "instances";
 	private static String SAGEMAKER_ENDPOINT = System.getenv("SAGEMAKER_ENDPOINT");
 	private static String TOPIC_ARN = System.getenv("TOPIC_ARN");
-	private static double HEART_DISEASE_PREDICTION = 1.0;
-	private double prediction_label=0.0;
+	private static int HEART_DISEASE_PREDICTION = 1;
+	private int prediction_label=0;
 	private double score =0.0;
 
 	// instantiate the clients
@@ -66,8 +66,9 @@ public class LambdaFunctionHandler implements RequestHandler<APIGatewayProxyRequ
 				Iterator<Object> iter = predictions.iterator();
 				while (iter.hasNext()) {
 					JSONObject prediction = (JSONObject)iter.next();
-					//get the prediciton label
-					prediction_label = ((Double) prediction.get("predicted_label")).doubleValue();
+					
+					//get the prediction label - either 0 or 1
+					prediction_label = (int)prediction.get("predicted_label");
 					
 					//get the prediction score
 					score = ((Double) prediction.get("score")).doubleValue();
