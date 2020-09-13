@@ -105,13 +105,15 @@ In this section, you will launch a cloud formation template that performs the fo
 The cloud formation template has created an endpoint that can be invoked in real time to predict heart disease.  We will use the sample data below to get a prediction of heart disease.
 
 Example data:
-You can use API Gateway console, postman, or simple curl command to invoke your API in real time.  Below is an example curl command to get heart disease prediction in real time.
+You can use API Gateway console or postman, to invoke your API in real time.  Below sample data to get heart disease prediction in real time.
 
-curl -d ‘{"age": "23","sex": 1,"cp": 3,"trestbps": 145,"chol": 233,"fbs": 1,"restecg": 0,"thalach":150,"exang": 0,"oldpeak": 2.3,"slope": 0,"ca": 0,"thal": 1}’ **-X POST** **{ENTER_API_GATEWAY_ENDPOINT};**
+{"age": "23","sex": 1,"cp": 3,"trestbps": 145,"chol": 233,"fbs": 1,"restecg": 0,"thalach":150,"exang": 0,"oldpeak": 2.3,"slope": 0,"ca": 0,"thal": 1}
 
 The above call should return a real time prediction:
 
  ![prediction_result](heart-disease-predictor/src/main/resources/images/curlResult.png)
+ 
+ ![postman_result](heart-disease-predictor/src/main/resources/images/postmanResult.png)
 
 
 Note: When prediction label is 1, a notification e-mail is also sent.  You may have to first confirm the subscription of your e-mail.
